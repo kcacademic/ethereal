@@ -10,10 +10,12 @@ node {
    }
    stage('Build') {
       // Run the maven build
-      if (isUnix()) {
-         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
-      } else {
-         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
+      withSonarQubeEnv('SonarQube') {
+	      if (isUnix()) {
+	         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package sonar:sonar"
+	      } else {
+	         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package sonar:sonar/)
+	      }
       }
    }
    stage('Results') {
