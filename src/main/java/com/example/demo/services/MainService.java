@@ -6,11 +6,5 @@ public class MainService {
 		
 		return userID;
 	}
-	
-	
-	public boolean getStatus() {
-		
-		return false;
-	}
 
 }
