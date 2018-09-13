@@ -20,6 +20,11 @@ node {
    }
    stage('Unit Test') {
       // Run unit tests
+      if (isUnix()) {
+	      sh "'${mvnHome}/bin/mvn' test"
+	  } else {
+	      bat(/"${mvnHome}\bin\mvn" test/)
+	  }
       junit '**/target/surefire-reports/TEST-*.xml'
       archive 'target/*.jar'
    }
