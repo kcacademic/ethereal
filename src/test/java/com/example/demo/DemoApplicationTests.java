@@ -10,7 +10,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class DemoApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	public void contollerTests() {
+		
+		assert(true);
+		
 	}
 
 }
