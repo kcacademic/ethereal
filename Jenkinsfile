@@ -42,6 +42,7 @@ node {
 	      }
       }
    }
+   /*
    stage("Quality Gate"){
 	  timeout(time: 1, unit: 'HOURS') {
 	      def qg = waitForQualityGate()
@@ -50,12 +51,21 @@ node {
 	      }
 	  }
    }
+   */
    stage('Maven Package') {
       // Run the maven package
 	  if (isUnix()) {
 	      sh "'${mvnHome}/bin/mvn' -DskipTests package"
 	  } else {
 	      bat(/"${mvnHome}\bin\mvn" -DskipTests package/)
+	  }
+   }
+   stage('Maven Container') {
+      // Run the maven package
+	  if (isUnix()) {
+	      sh "'${mvnHome}/bin/mvn' docker:build"
+	  } else {
+	      bat(/"${mvnHome}\bin\mvn" docker:build/)
 	  }
    }
    stage('Deploy') {
