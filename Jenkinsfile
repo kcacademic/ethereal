@@ -63,9 +63,9 @@ node {
    stage('Maven Container') {
       // Run the maven package
 	  if (isUnix()) {
-	      sh "'${mvnHome}/bin/mvn' docker:build"
+	      sh "'${mvnHome}/bin/mvn' dockerfile:build"
 	  } else {
-	      bat(/"${mvnHome}\bin\mvn" docker:build/)
+	      bat(/"${mvnHome}\bin\mvn" dockerfile:build/)
 	  }
    }
    stage('Deploy') {
