@@ -60,16 +60,24 @@ node {
 	      bat(/"${mvnHome}\bin\mvn" -DskipTests package/)
 	  }
    }
-   stage('Maven Container') {
+   stage('Docker Container') {
       // Run the maven package
 	  if (isUnix()) {
-	      sh "'${mvnHome}/bin/mvn' dockerfile:build"
+	      sh "'${mvnHome}/bin/mvn' docker:build"
 	  } else {
-	      bat(/"${mvnHome}\bin\mvn" dockerfile:build/)
+	      bat(/"${mvnHome}\bin\mvn" docker:build/)
 	  }
    }
-   stage('Deploy') {
-      // Run the deployment
-	  echo '## TODO DEPLOYMENT ##'
+   stage('Docker Run') {
+      // Run the maven package
+	  if (isUnix()) {
+	      sh "docker stop ethereal_run"
+		  sh "docker rm ethereal_run"
+		  sh "docker run -d -p 8080:8080 --name ethereal_run ethereal"
+	  } else {
+	      bat(/docker stop ethereal_run/)
+		  bat(/docker rm ethereal_run/)
+		  bat(/docker run -d -p 8080:8080 --name ethereal_run ethereal/)
+	  }
    }
 }
